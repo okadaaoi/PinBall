@@ -8,8 +8,6 @@ public class BoxController : MonoBehaviour
     private GameObject unitychan;
     //Unityちゃんとカメラの距離
     private float difference;
-    private GameObject DestroyContoller;
-    public PrefabDestroy prefabDestroy;
 
     void Start()
     {
@@ -25,9 +23,12 @@ public class BoxController : MonoBehaviour
         this.transform.position = new Vector3(0, this.transform.position.y, this.unitychan.transform.position.z - difference);
     }
 
-    public void OnColliderEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        Debug.Log(collision.gameObject.name);
-        PrefabDestroy script = prefabDestroy.GetComponent<PrefabDestroy>();
+        //障害物に衝突した場合
+        if (other.gameObject.tag == "CarTag" || other.gameObject.tag == "TrafficConeTag" || other.gameObject.tag == "CoinTag")
+        {
+            Destroy(other.gameObject);
+        }
     }
 }
